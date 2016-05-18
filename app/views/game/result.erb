@@ -1,0 +1,7 @@
+<%= @player.name %> chose <%= @player.weapon.type %>
+<%= @opponent.name %> chose <%= @opponent.weapon.type %>
+<% if @game.winner %>
+  <%= @game.winner.name %> wins!
+<% else %>
+  It's a draw!
+<% end %>

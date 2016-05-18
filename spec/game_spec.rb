@@ -2,9 +2,22 @@ require 'game'
 
 describe Game do
 
-  subject(:game){ described_class.new(player_one: player, player_two: computer) }
+  subject(:game){ described_class.new }
   let(:player){ double :player }
   let(:computer){ double :computer }
+
+  before do
+    game.add(player)
+    game.add(computer)
+  end
+
+  it 'builds a class instance' do
+    allow(Game).to receive(:new).and_return(game)
+    Game.build
+
+    expect(Game.current).to eq game
+  end
+
 
   specify 'player can win' do
     allow(player).to receive(:defeats?).with(computer).and_return(true)
@@ -25,4 +38,12 @@ describe Game do
 
     expect(game.winner).to be_nil
   end
+
+  specify 'player 1 chooses a weapon' do
+    allow(computer).to receive(:choose).with(nil)
+    expect(player).to receive(:choose).with(:rock)
+
+    game.play(player_one_weapon: :rock)
+  end
+
 end

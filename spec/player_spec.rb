@@ -1,14 +1,11 @@
 require 'player'
+require 'weapon'
 
 describe Player do
   let(:player){ described_class.new(name: 'Bob', weapon_class: weapon_class) }
-  let(:challenger){ Computer.new }
-  let(:weapon_class){ double :weapon_class, new: weapon }
-  let(:weapon){ double :weapon }
-
-  it 'has a name' do
-    expect(player.name).to eq('Bob')
-  end
+  let(:challenger){ described_class.new }
+  let(:weapon_class){ class_double Weapon, arm: weapon }
+  let(:weapon){ instance_double Weapon }
 
   it 'defeats a challenger' do
     allow(weapon).to receive(:>).and_return(true)
@@ -16,21 +13,10 @@ describe Player do
 
     expect(player.defeats?(challenger)).to eq(true)
   end
-end
+  
+  it 'asks for a random weapon' do
+    expect(weapon_class).to receive(:random)
 
-describe Computer do
-
-  subject(:computer){ described_class.new(weapon_class: weapon_class) }
-  let(:weapon_class){ double :weapon, new: weapon }
-  let(:weapon){ double :weapon }
-
-  it 'has a name' do
-    expect(computer.name).to eq('RPS_Bot')
-  end
-
-  it 'gets a list of available weapons' do
-    expect(weapon_class).to receive(:types).and_return([:rock])
-
-    computer.choose
+    player.choose
   end
 end

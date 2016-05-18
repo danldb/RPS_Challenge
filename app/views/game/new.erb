@@ -1,0 +1,16 @@
+Welcome, <%= @player_name %>!
+<form action="/game" method="POST">
+  <label for="rock">
+    Rock:
+    <input type="radio" value="rock" name="weapon">
+  </label>
+  <label for="paper">
+    Paper: 
+    <input type="radio" value="paper" name="weapon">
+  </label>
+  <label for="scissors">
+    Scissors:
+    <input type="radio" value="scissors" name="weapon">
+  </label>
+  <input type="submit" value="Play!">
+</form>

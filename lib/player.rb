@@ -1,8 +1,7 @@
+# understand how to compare weapons with another player
 class Player
 
-  attr_reader :name
-
-  def initialize(name:, weapon_class: Weapon)
+  def initialize(name: 'RPS_Bot', weapon_class: Weapon)
     @name = name
     @weapon_class = weapon_class
   end
@@ -11,23 +10,11 @@ class Player
     weapon > challenger.weapon
   end
 
-  def choose(weapon)
-    @weapon = weapon_class.new(weapon)
+  def choose(weapon = nil)
+    return @weapon = weapon_class.arm(weapon) if weapon
+    @weapon = weapon_class.random
   end
 
   protected
-  attr_reader :weapon_class, :weapon
-end
-
-class Computer < Player
-
-  def initialize(name: 'RPS_Bot', weapon_class: Weapon)
-    super
-  end
-
-  def choose(weapon = nil)
-    weapons = weapon_class.types
-    @weapon = weapon || weapon_class.new(weapons.sample)
-  end
-
+  attr_reader :weapon_class, :weapon, :name
 end
